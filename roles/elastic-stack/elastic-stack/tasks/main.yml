@@ -1,0 +1,10 @@
+---
+# tasks file for elastic-stack
+- name: Include and Configure Elasticsearch
+  include_tasks: ./install-elastic.yaml
+
+- name: Include and Configure Logstash
+  include_tasks: ./install-logstash.yaml
+
+- name: Include and Configure Kibana
+  include_tasks: ./install-kibana.yaml
