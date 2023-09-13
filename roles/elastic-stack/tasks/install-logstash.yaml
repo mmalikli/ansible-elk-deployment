@@ -1,0 +1,15 @@
+---
+- name: Install Logstash
+  apt:
+    name: logstash
+    state: present
+
+# - name: Start Kibana service
+#   systemd:
+#     name: kibana
+#     state: started
+
+# - name: Enable Kibana service at boot
+#   systemd:
+#     name: kibana
+#     enabled: yes

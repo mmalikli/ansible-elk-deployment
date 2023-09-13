@@ -1,4 +1,31 @@
-- hosts: all 
+- name: Elastic-stack deployment playbook
+  hosts: all
   become: true
+  gather_facts: yes
+
+  pre_tasks:
+  - name: Update package cache
+    apt:
+      update_cache: yes
+      cache_valid_time: 3600
+
+  - name: Install required dependencies
+    package:
+      name:
+      - wget
+      - apt-transport-https
+      - ca-certificates 
+      - gnupg
+      state: present
+  
+  - name: Download Elasticsearch GPG key
+    shell: "wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg"
+
+  - name: Add Elasticsearch APT repository
+    copy:
+      content: "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/8.x/apt stable main"
+      dest: /etc/apt/sources.list.d/elastic-8.x.list
+      mode: '0644'  # Set the file permissions as needed
+
   roles:
   - elastic-stack

@@ -1,0 +1,6 @@
+---
+# handlers file for elastic-stack
+- name: Restart Kibana
+  systemd:
+    name: kibana
+    state: restarted

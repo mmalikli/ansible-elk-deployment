@@ -1,0 +1,22 @@
+---
+- name: Install Kibana
+  apt:
+    name: kibana
+    state: present
+
+- name: Configure Kibana to serve on ipv4 {{ ansible_default_ipv4.address }}
+  template:
+    src: ../templates/kibana.yml.j2
+    dest: /etc/kibana/kibana.yml
+  notify:
+  - Restart Kibana
+
+- name: Start Kibana service
+  systemd:
+    name: kibana
+    state: started
+
+- name: Enable Kibana service at boot
+  systemd:
+    name: kibana
+    enabled: yes
